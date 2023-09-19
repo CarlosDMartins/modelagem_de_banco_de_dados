@@ -24,6 +24,11 @@ insert into aluno values ( 3001, 'Godofredo Henrique', '2000-03-15', '123.456.78
 insert into aluno values ( null, 'Josefina Winter', '1945-02-10', '123.456.789-02', 'Clenisbaldo Winter', null  );
 
 
+insert into aluno values ( null, 'Ana Carolina', '2001-07-11', '123.456.789-04', 'Maria Carolina', 'ac@email.com'  );
+
+insert into aluno (matricula, nome, nascimento, cpf, responsavel, email) values ( null, 'Elias Sherman', '1995-03-02', '123.456.789-05', 'John Sherman', 'es@email.com' );
+
+
  select * from aluno;
 
  create table disciplina ( cod_disciplina int primary key auto_increment, nome varchar (30) not null);create table estuda ( id_estuda int primary key auto_increment, fk_aluno_matricula int not null, fk_turma_numero int not null );
