@@ -1,55 +1,114 @@
-create database escola;
-
-
-status;
-
-
-show databases;
-
-
 use escola;
 
+ show table;
 
-create table Aluno;
+ create table disciplinas ( cod_disciplina int primary key auto_increment, nome varchar(30) not null );
 
-mysql>  create table Aluno ( matricula int primary key auto_increment, nome varchar(80) not null, nascimento date, cpf char(14) not null unique, responsavel varchar(80) not null, email varchar(80) unique );
+ create table estuda ( idEstuda int primary key auto_increment, fk_Aluno_matricula int not null, fk_Turma_numero int not null );
 
+ alter table estuda add constraint fkmat foreign key (fk_Aluno_matricula) references Aluno (matricula);
 
-create table Turma ( numero int primary key not null unique, turno char(1) not null, definicao varchar(60) not null  );
+ desc estuda;
 
+ alter table possui add constraint fktur foreign key ( fk_Turma_numero ) references turma ( numero ) ;
 
-insert into aluno values ( 3001, 'Godofredo Henrique', '2000-03-15', '123.456.789-01', 'Godojane Maia', 'gh@email.com'  ); 
+ create table Professor ( matricula int primary key auto_increment, nome varchar(80) not null, formacao varchar(30));
 
+ create table leciona ( idLeciona int primary key auto_increment, fk_Disciplina_cod_disciplina int not null, fk_Professor_matricula int not null );
 
-insert into aluno values ( null, 'Josefina Winter', '1945-02-10', '123.456.789-02', 'Clenisbaldo Winter', null  );
+ alter table leciona add constraint fkdis2 foreign key ( fk_Disciplina_cod_disciplina ) references disciplinas ( cod_disciplina ) ;
 
+ alter table leciona add constraint fkpro foreign key ( fk_professor_matricula ) references professor ( matricula ) ;
 
-insert into aluno values ( null, 'Ana Carolina', '2001-07-11', '123.456.789-04', 'Maria Carolina', 'ac@email.com'  );
+ insert into aluno values ( null, 'Ana Carolina', '2001-07-11', '123.456.789-04', 'Maria Carolina', 'ac@email.com' );
 
-insert into aluno (matricula, nome, nascimento, cpf, responsavel, email) values ( null, 'Elias Sherman', '1995-03-02', '123.456.789-05', 'John Sherman', 'es@email.com' );
+ insert into aluno ( matricula, nome, nascimento, cpf, responsavel, email ) values ( null, 'Jonh Sherman', '1995-03-02', '123.456.789-05', 'Maria Carolina', 'es@email.com' ); insert into aluno ( nome, cpf, responsavel ) values ( 'Waldiney Mouse', '123.456.789-06', 'Wesley Keyboard' );
 
+ insert into aluno ( cpf, matricula, nome, responsavel, email ) values ( '123.456.789-07', null, 'Genivaldo Williams', 'Clotilde Williams', 'gw@email.com' );
+
+ insert into turma values ( 2023080, 'M', 'Tecnico de Informática' ) desc estuda; insert into estuda values ( 7501, 3001, 2023090 );
+
+ insert into estuda values ( 7502, 3006, 2023080 ); desc disciplinas; insert into disciplinas values ( 21, 'Programação' );
+
+ insert into disciplinas values ( null, 'Redes' );
+
+ insert into disciplinas values ( null, 'Tratamento de Imagem' );
+
+ insert into possui values ( 341, 21, 2023080 );
+
+ insert into possui values ( null, 22, 2023080 );
+
+ insert into possui values ( null, 23, 2023090 );
+
+ select * from possui;
+
+ insert into professor values ( 1901, 'Sérgio Carlos', 'T.I.' );
+
+ insert into professor values ( null, 'Vicente Silva', 'T.I.' );
+
+ insert into professor values ( null, 'Flávia Albuquerque', 'Design' );
+
+ select * from professor; select * from disciplinas;
+
+ desc leciona;
+
+ insert into leciona values ( 601, 21, 1901 );
+
+ insert into leciona values ( null, 22, 1902 );
+
+ insert into leciona values ( null, 23, 1903 );
+
+ select * from leciona;
+
+ desc leciona;
+
+ insert into disciplinas values ( null, 'Lógica de Programação' );
+
+ select * from disciplinas;
+
+ insert into professor values ( null, 'Jefferson Brandão', 'T.I.' );
+
+ select * from disciplinas;
+
+ select * from professor;
+
+ insert into possui values ( null, 24, 2023080 );
+
+ select * from possui;
+
+ update professor set nome = 'Vicente Silva Vicente Orsino' where matricula = 1902; select * from professor;
+
+ update professor set nome = 'Vicente Orsino' where matricula = 1902; select * from professor;
 
  select * from aluno;
 
- create table disciplina ( cod_disciplina int primary key auto_increment, nome varchar (30) not null);create table estuda ( id_estuda int primary key auto_increment, fk_aluno_matricula int not null, fk_turma_numero int not null );
+ update aluno set nascimento = '1990-02-08' where matricula = 3007;
 
- alter table estuda add constraint fkmat foreign key (fk_aluno_matricula) references aluno (matricula) ;
+ select * from aluno;
 
-alter table estuda add constraint fknum foreign key (fk_turma_numero) references turma (numero);
+ update aluno set nascimento = '1994-10-02' where matricula = 3008;
 
-create table possui ( idpossui int primary key auto_increment, fk_disciplina_cod_disciplina int not null, fk_turma_numero int not null  );
+ update aluno set nascimento = '1990-02-08' where matricula = 3008;
 
-alter table possui add constraint fkdis foreign key ( fk_disciplina_cod_disciplina  ) references disciplina (cod_disciplina);
+ select * from aluno;
 
-alter table possui add constraint fktur foreign key (fk_turma_numero) references turma (numero);
+ alter table professor add email varchar(80) after nome;
 
-create table professor ( matricula int primary key auto_increment, nome varchar(80) not null, formacao varchar(30)  );
+ select * from professor; update professor set email = 'sergio@email.com' where matricula = 1901; select * from professor;
 
-create table leciona (idleciona int primary key auto_increment, fk_disciplina_cod_disciplina int not null, fk_professor_matricula int not null  );
+ update professor set email = 'vicentecom' where matricula = 1902; update professor set email = 'sergio@email.com' where matricula = 1903;
 
- alter table leciona add constraint fkdis2 foreign key ( fk_disciplina_cod_disciplina ) references disciplina (cod_disciplina);
+ update professor set email = 'flavia@email.com' where matricula = 1903; update professor set email = 'jeff@email.com' where matricula = 1904; select * from professor;
 
-alter table leciona add constraint fkpro foreign key ( fk_professor_matricula ) references professor (matricula);
+ insert into possui values ( null, 23, 2023100 );
+
+ insert into turma values ( 2023100, 'M', 'Técnico de Comunicação Visual' );
+
+ select * from turma;
+
+ insert into aluno ( nome, cpf, responsavel ) values ( 'Judite Presley', '123.456.789-08', 'Elvis Presley' ); select * from aluno;
+
+ update aluno set nascimento = '1994-04-10' where matricula = 3010; select * from disciplinas; update disciplinas set nome = 'Programação Python' where cod_disciplina = 21; select * from disciplinas;
 
 
 
